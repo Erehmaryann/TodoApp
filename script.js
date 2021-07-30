@@ -2,7 +2,10 @@ const button = document.querySelector(".inputField button");
 const input = document.querySelector(".inputField input");
 const ul = document.querySelector("ul");
 const tog = document.querySelectorAll("li");
+const tog2 = document.querySelectorAll(".check");
 const but = document.querySelectorAll("i");
+
+console.log(tog2[0].parentElement, "here");
 
 function inputLength() {
   return input.value.length;
@@ -34,11 +37,9 @@ function addListafterKeypress(event) {
   }
 }
 
-tog.forEach(function (item) {
+tog2.forEach(function (item) {
   item.addEventListener("click", function (e) {
-    if (e.target.tagName === "LI") {
-      e.target.classList.toggle("done");
-    }
+    item.parentElement.classList.toggle("done");
   });
 });
 
