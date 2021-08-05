@@ -5,7 +5,7 @@ const tog = document.querySelectorAll("li");
 const tog2 = document.querySelectorAll(".check");
 const but = document.querySelectorAll("i");
 
-console.log(tog2[0].parentElement, "here");
+// console.log(tog2[0].parentElement, "here");
 
 function inputLength() {
   return input.value.length;
@@ -13,18 +13,19 @@ function inputLength() {
 
 function createListElement() {
   let li = document.createElement("li");
-
+  let inp = document.createElement("input");
+  inp.type = "checkbox";
   const icon = document.createElement("i");
   icon.className = "fas fa-trash";
   icon.addEventListener("click", function () {
     li.remove();
   });
-  li.addEventListener("click", function (e) {
-    if (e.target.tagName === "LI") {
-      e.target.classList.toggle("done");
-    }
+  inp.addEventListener("click", function (e) {
+    inp.parentElement.classList.toggle("done");
   });
+
   const a = document.createTextNode(input.value);
+  li.appendChild(inp);
   li.appendChild(a);
   li.appendChild(icon);
 
