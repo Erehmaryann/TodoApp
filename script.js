@@ -9,7 +9,7 @@ function inputLength() {
   return input.value.length;
 }
 
-function createListElement() {
+function list(isList, item) {
   let li = document.createElement("li");
   let inp = document.createElement("input");
   inp.type = "checkbox";
@@ -18,17 +18,22 @@ function createListElement() {
   icon.addEventListener("click", function () {
     li.remove();
   });
-  inp.addEventListener("click", function (e) {
+  inp.addEventListener("click", function () {
     inp.parentElement.classList.toggle("done");
   });
 
-  const a = document.createTextNode(input.value);
+  const a = isList
+    ? document.createTextNode(input.value)
+    : document.createTextNode(item);
   li.appendChild(inp);
   li.appendChild(a);
   li.appendChild(icon);
 
   ul.appendChild(li);
+}
 
+function createListElement() {
+  list(true);
   const oldItems = JSON.parse(localStorage.getItem("items") || "[]");
   const newItems = [...oldItems, input.value];
 
@@ -42,23 +47,7 @@ function createListElement() {
 const allItems = JSON.parse(localStorage.getItem("items") || "[]");
 if (allItems) {
   allItems.map((item) => {
-    let li = document.createElement("li");
-    let inp = document.createElement("input");
-    inp.type = "checkbox";
-    const icon = document.createElement("i");
-    icon.className = "fas fa-trash";
-    icon.addEventListener("click", function () {
-      li.remove();
-    });
-    inp.addEventListener("click", function (e) {
-      inp.parentElement.classList.toggle("done");
-    });
-    const a = document.createTextNode(item);
-    li.appendChild(inp);
-    li.appendChild(a);
-    li.appendChild(icon);
-
-    ul.appendChild(li);
+    list(false, item);
   });
 }
 
@@ -69,7 +58,7 @@ function addListafterKeypress(event) {
 }
 
 tog2.forEach(function (item) {
-  item.addEventListener("click", function (e) {
+  item.addEventListener("click", function () {
     item.parentElement.classList.toggle("done");
   });
 });
