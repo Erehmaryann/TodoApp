@@ -120,3 +120,7 @@ ul li i {
 ul li:hover i {
   right: 0px;
 }
+
+ul input {
+  margin-right: 10px;
+}

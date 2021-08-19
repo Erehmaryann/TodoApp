@@ -5,8 +5,6 @@ const tog = document.querySelectorAll("li");
 const tog2 = document.querySelectorAll(".check");
 const but = document.querySelectorAll("i");
 
-// console.log(tog2[0].parentElement, "here");
-
 function inputLength() {
   return input.value.length;
 }
@@ -30,8 +28,40 @@ function createListElement() {
   li.appendChild(icon);
 
   ul.appendChild(li);
+
+  const oldItems = JSON.parse(localStorage.getItem("items") || "[]");
+  const newItems = [...oldItems, input.value];
+
+  // set items to local storage
+  localStorage.setItem("items", JSON.stringify(newItems));
+
   input.value = "";
 }
+
+// Check local storage for items
+const allItems = JSON.parse(localStorage.getItem("items") || "[]");
+if (allItems) {
+  allItems.map((item) => {
+    let li = document.createElement("li");
+    let inp = document.createElement("input");
+    inp.type = "checkbox";
+    const icon = document.createElement("i");
+    icon.className = "fas fa-trash";
+    icon.addEventListener("click", function () {
+      li.remove();
+    });
+    inp.addEventListener("click", function (e) {
+      inp.parentElement.classList.toggle("done");
+    });
+    const a = document.createTextNode(item);
+    li.appendChild(inp);
+    li.appendChild(a);
+    li.appendChild(icon);
+
+    ul.appendChild(li);
+  });
+}
+
 function addListafterKeypress(event) {
   if (inputLength() > 0 && event.keyCode === 13) {
     createListElement();
